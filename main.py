@@ -13,21 +13,24 @@ def main():
     icon = pg.image.load("snake.png")
     pg.display.set_icon(icon)
 
-    rectangle =  pg.Rect((100,50), (100,100))
+    clock = pg.time.Clock()
 
     board = Board(surface = screen)
-    snake = Snake(board.sizeInFields/2)
-
-
+    snake = Snake(start_position = board.sizeInFields/2)
 
     # GAME LOOP
     running = True
     while running:
+        clock.tick(5)
+
         # EVENTS HANDLING
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 running = False
+            elif event.type == pg.KEYDOWN:
+                snake.changeDirection(event)
 
+        snake.move(event)
         board.display()
         snake.display(board)
         # screen.fill((0, 0, 255)) # fill the screen with colour
@@ -36,9 +39,6 @@ def main():
 
 
 
-    # clock = pg.time.Clock()
-    # surface = pg.Surface((screen_size,screen_size))
-    # surface = surface.convert()
 
 if __name__ == '__main__':
     main()
