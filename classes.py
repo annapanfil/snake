@@ -41,7 +41,6 @@ class Snake():
         self.length = 1
         self.positions = [[start_position, start_position]] # position (in fields)
         self.color = color
-        self.score = 0
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
 
     def turn(self, turn_direcions):
@@ -68,19 +67,28 @@ class Snake():
         else:
             print("Niepoprawny klawisz:", event.key)
 
-    def move(self, event, board_size):
+    def move(self, event, board_size, food):
         # move == change head position, delete end of tail
+
         head = self.positions[0]
         new_head = [head[0] + self.direction[0], head[1] + self.direction[1]]
+
         # check if eating its tail
         if self.length > 2 and new_head in self.positions[2:]:
             raise GameOver
+
         # check if hiting the border
         elif new_head[0] < 0 or new_head[0] > board_size or new_head[1] < 0 or new_head[1] > board_size:
             raise GameOver
+
         else:
             self.positions.insert(0, new_head)
-            self.positions.pop()
+            # check if eating food
+            if new_head == food.position:
+                self.length += 1
+                food.eat(board_size)
+            else: self.positions.pop()
+
 
     def display(self, board: Board):
         for coords in self.positions:
@@ -88,4 +96,13 @@ class Snake():
             pg.draw.rect(board.surface, self.color, rectangle)
 
 class Food():
-    pass
+    def __init__(self, board_size, color = (175, 243, 98)):
+        self.position = [random.randint(0,board_size), random.randint(0,board_size)]
+        self.color = color
+
+    def display(self, board):
+        rectangle = pg.Rect((self.position[0]*board.field_size, self.position[1]*board.field_size), (board.field_size, board.field_size))
+        pg.draw.rect(board.surface, self.color, rectangle)
+
+    def eat(self, board_size):
+        self.position = [random.randint(0,board_size), random.randint(0,board_size)]

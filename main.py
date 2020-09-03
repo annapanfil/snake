@@ -17,11 +17,12 @@ def main():
 
     board = Board(surface = screen)
     snake = Snake(start_position = board.sizeInFields/2)
+    food = Food(board_size = board.sizeInFields)
 
     # GAME LOOP
     running = True
     while running:
-        clock.tick(5)
+        clock.tick(10)
         # EVENTS HANDLING
         try:
             for event in pg.event.get():
@@ -30,13 +31,14 @@ def main():
                 elif event.type == pg.KEYDOWN:
                     snake.changeDirection(event)
 
-            snake.move(event, board.sizeInFields)
+            snake.move(event, board.sizeInFields, food)
         except GameOver:
             print("GAME OVER")
             running = False
 
         board.display()
         snake.display(board)
+        food.display(board)
         # screen.fill((0, 0, 255)) # fill the screen with colour
         # screen.blit(icon, (100,100)) # show the picture
         pg.display.update()
