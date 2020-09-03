@@ -1,12 +1,16 @@
-# snake
+# Snake
 Snake game in python. 
 
 Written just for fun (and to get familiar with Pygame).
 
-## technologies
+## Technologies
 python 3
 
 pygame
+
+## Setup
+
+$python3 main.py
 
 ---
 Inspired by:
