@@ -22,22 +22,24 @@ def main():
     running = True
     while running:
         clock.tick(5)
-
         # EVENTS HANDLING
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                running = False
-            elif event.type == pg.KEYDOWN:
-                snake.changeDirection(event)
+        try:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    running = False
+                elif event.type == pg.KEYDOWN:
+                    snake.changeDirection(event)
 
-        snake.move(event)
+            snake.move(event, board.sizeInFields)
+        except GameOver:
+            print("GAME OVER")
+            running = False
+
         board.display()
         snake.display(board)
         # screen.fill((0, 0, 255)) # fill the screen with colour
         # screen.blit(icon, (100,100)) # show the picture
         pg.display.update()
-
-
 
 
 if __name__ == '__main__':
