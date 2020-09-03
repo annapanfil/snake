@@ -16,6 +16,7 @@ def main():
     rectangle =  pg.Rect((100,50), (100,100))
 
     board = Board(surface = screen)
+    snake = Snake(board.sizeInFields/2)
 
 
 
@@ -28,6 +29,7 @@ def main():
                 running = False
 
         board.display()
+        snake.display(board)
         # screen.fill((0, 0, 255)) # fill the screen with colour
         # screen.blit(icon, (100,100)) # show the picture
         pg.display.update()

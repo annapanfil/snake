@@ -1,21 +1,5 @@
 import pygame as pg
 
-class Snake():
-    def __init__(self, screen_size:int, color = (243, 98, 102)):
-        self.length = 1
-        self.positions = [(screen_size/2, screen_size/2)]
-        self.color = color
-
-    def move():
-        pass
-
-    def display():
-        pass
-
-
-class Food():
-    pass
-
 class Board():
     def __init__(self, surface, field_size = 20, light_color=(98, 175, 243), dark_color=(98, 102, 243)):
         self.field_size = field_size
@@ -29,7 +13,7 @@ class Board():
 
     @property
     def sizeInFields(self):
-         return int(self.screen_size/self.field_size)
+        return int(self.screen_size/self.field_size)
 
     @property
     def screen_size(self):
@@ -43,3 +27,22 @@ class Board():
                     pg.draw.rect(self.surface, self.dark_color, rectangle)
                 else:
                     pg.draw.rect(self.surface, self.light_color, rectangle)
+
+
+class Snake():
+    def __init__(self, start_position, color = (243, 98, 102)):
+        self.length = 1
+        self.positions = [(start_position, start_position)]
+        self.color = color
+
+    def move():
+        pass
+
+    def display(self, board: Board):
+        for coords in self.positions:
+            rectangle = pg.Rect((coords[0]*board.field_size, coords[1]*board.field_size), (board.field_size, board.field_size))
+            pg.draw.rect(board.surface, self.color, rectangle)
+
+
+class Food():
+    pass
