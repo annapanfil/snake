@@ -1,8 +1,25 @@
 import pygame as pg
 from classes import *
+import PySimpleGUI as sg
+import os
 
 def main():
     screen_size = 480
+
+    # create PySimpleGUI window
+    layout = [[sg.Text('Test of PySimpleGUI with PyGame')],
+              [sg.Graph((screen_size, screen_size), (0, 0), (screen_size, screen_size), key='-GRAPH-')],
+              [sg.Button('Draw'), sg.Exit()]]
+
+    window = sg.Window('PySimpleGUI + PyGame', layout, finalize=True)
+
+    # integrate PyGame with PySimpleGUI (tkinter exactly)
+    graph = window['-GRAPH-']
+    embed = graph.TKCanvas
+    os.environ['SDL_WINDOWID'] = str(embed.winfo_id())
+    # os.environ['SDL_VIDEODRIVER'] = 'windib' # windows
+    os.environ['SDL_VIDEODRIVER'] = 'x11' # linux
+
 
     # INITIALIZE PYGAME AND CREATE THE WINDOW
     pg.init()
@@ -23,6 +40,13 @@ def main():
     running = True
     while running:
         clock.tick(10)
+
+        # PySimpleGUI events handling
+        ev, values = window.read(timeout=10)
+        if ev in (sg.WIN_CLOSED, 'Exit'):
+            running = False
+        pg.display.update()
+
         # EVENTS HANDLING
         try:
             for event in pg.event.get():
