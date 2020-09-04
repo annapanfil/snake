@@ -1,29 +1,14 @@
 import pygame as pg
 from classes import *
-import PySimpleGUI as sg
 import os
 
-def main():
+def game():
     screen_size = 480
-
-    # create PySimpleGUI window
-    layout = [[sg.Text('Test of PySimpleGUI with PyGame')],
-              [sg.Graph((screen_size, screen_size), (0, 0), (screen_size, screen_size), key='-GRAPH-')],
-              [sg.Button('Draw'), sg.Exit()]]
-
-    window = sg.Window('PySimpleGUI + PyGame', layout, finalize=True)
-
-    # integrate PyGame with PySimpleGUI (tkinter exactly)
-    graph = window['-GRAPH-']
-    embed = graph.TKCanvas
-    os.environ['SDL_WINDOWID'] = str(embed.winfo_id())
-    # os.environ['SDL_VIDEODRIVER'] = 'windib' # windows
-    os.environ['SDL_VIDEODRIVER'] = 'x11' # linux
-
 
     # INITIALIZE PYGAME AND CREATE THE WINDOW
     pg.init()
     screen = pg.display.set_mode((screen_size, screen_size))
+    # os.environ['SDL_VIDEO_WINDOW_POS'] = '1000,1000' # sets window position – DOESN'T WORK
 
     # Title and icon
     pg.display.set_caption("Snake game")
@@ -40,12 +25,6 @@ def main():
     running = True
     while running:
         clock.tick(10)
-
-        # PySimpleGUI events handling
-        ev, values = window.read(timeout=10)
-        if ev in (sg.WIN_CLOSED, 'Exit'):
-            running = False
-        pg.display.update()
 
         # EVENTS HANDLING
         try:
@@ -67,5 +46,7 @@ def main():
 
     pg.quit()
 
+    return snake.length
+
 if __name__ == '__main__':
-    main()
+    game()
