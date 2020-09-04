@@ -78,7 +78,7 @@ class Snake():
             raise GameOver
 
         # check if hiting the border
-        elif new_head[0] < 0 or new_head[0] > board_size or new_head[1] < 0 or new_head[1] > board_size:
+        elif new_head[0] < 0 or new_head[0] > board_size-1 or new_head[1] < 0 or new_head[1] > board_size-1:
             raise GameOver
 
         else:
@@ -97,7 +97,7 @@ class Snake():
 
 class Food():
     def __init__(self, board_size, color = (175, 243, 98)):
-        self.position = [random.randint(0,board_size), random.randint(0,board_size)]
+        self.position = [random.randint(0,board_size-1), random.randint(0,board_size-1)]
         self.color = color
 
     def display(self, board):
@@ -105,4 +105,4 @@ class Food():
         pg.draw.rect(board.surface, self.color, rectangle)
 
     def eat(self, board_size):
-        self.position = [random.randint(0,board_size), random.randint(0,board_size)]
+        self.position = [random.randint(0,board_size-1), random.randint(0,board_size-1)]

@@ -33,16 +33,15 @@ def main():
 
             snake.move(event, board.sizeInFields, food)
         except GameOver:
-            print("GAME OVER")
+            print("GAME OVER\nYour score:", snake.length)
             running = False
 
         board.display()
         snake.display(board)
         food.display(board)
-        # screen.fill((0, 0, 255)) # fill the screen with colour
-        # screen.blit(icon, (100,100)) # show the picture
         pg.display.update()
 
+    pg.quit()
 
 if __name__ == '__main__':
     main()
