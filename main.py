@@ -6,7 +6,7 @@ from gui import *
 def game(personalize):
 
     screen_size = int(personalize['board_size'])
-    food = int(personalize['food'])
+    food_quantity = int(personalize['food'])
 
     # INITIALIZE PYGAME AND CREATE THE WINDOW
     pg.init()
@@ -22,7 +22,9 @@ def game(personalize):
 
     board = Board(surface = screen)
     snake = Snake(start_position = board.sizeInFields/2)
-    food = Food(board_size = board.sizeInFields)
+    food = []
+    for _ in range(food_quantity):
+        food.append(Food(board_size = board.sizeInFields))
 
     # GAME LOOP
     running = True
@@ -44,13 +46,13 @@ def game(personalize):
 
         board.display()
         snake.display(board)
-        food.display(board)
+        for f in food:
+            f.display(board)
         pg.display.update()
 
     pg.quit()
 
     return snake.length
 
-  
 if __name__ == '__main__':
     mainMenu()
