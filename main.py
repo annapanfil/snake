@@ -4,8 +4,9 @@ from classes import *
 from gui import *
 
 def game(personalize):
-    screen_size = int(personalize['board_size']) if 'board_size' in personalize.keys() else 480
-    print (screen_size)
+
+    screen_size = int(personalize['board_size'])
+    food = int(personalize['food'])
 
     # INITIALIZE PYGAME AND CREATE THE WINDOW
     pg.init()
@@ -49,7 +50,6 @@ def game(personalize):
     pg.quit()
 
     return snake.length
-
 
   
 if __name__ == '__main__':
