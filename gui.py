@@ -30,9 +30,9 @@ def exitMenu(score, personalize):
 
 def settings(personalize):
     # sg.Popup("You thought you can change anything? xD\nGo and play")
-    layout = [[sg.Text('Board size:\t\t\t' ), sg.Slider(range=(200, 800), default_value=personalize['board_size'],
+    layout = [[sg.Text('Board size:\t' ), sg.Slider(range=(200, 800), default_value=personalize['board_size'],
                 resolution = 40, orientation='horizontal', key="board_size")],
-              [sg.Text('Quantity of food (Not working yet):\t' ), sg.Slider(range=(1, 10), default_value=personalize['food'],
+              [sg.Text('Quantity of food:\t' ), sg.Slider(range=(1, 10), default_value=personalize['food'],
                           resolution = 1, orientation='horizontal', key="food")],
               [sg.Button('Back', key="-MENU-")]]
 
