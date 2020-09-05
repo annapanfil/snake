@@ -84,10 +84,12 @@ class Snake():
         else:
             self.positions.insert(0, new_head)
             # check if eating food
-            if new_head == food.position:
-                self.length += 1
-                food.eat(board_size)
-            else: self.positions.pop()
+            for f in food:
+                if new_head == f.position:
+                    self.length += 1
+                    f.eat(board_size)
+        if self.length != len(self.positions):
+            self.positions.pop()
 
 
     def display(self, board: Board):
