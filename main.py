@@ -4,6 +4,7 @@ from classes import *
 from gui import *
 
 def game(personalize):
+
     screen_size = int(personalize['board_size'])
     food = int(personalize['food'])
 
@@ -50,7 +51,6 @@ def game(personalize):
 
     return snake.length
 
-
-
+  
 if __name__ == '__main__':
     mainMenu()

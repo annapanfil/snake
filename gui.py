@@ -3,6 +3,7 @@ import os
 from main import *
 
 def eventHandling(window, personalize):
+
     while(True):
         event, _ = window.read()
         if event in (sg.WIN_CLOSED, 'Exit'):
@@ -25,6 +26,7 @@ def exitMenu(score, personalize):
 
     window = sg.Window('Snake game - GAME OVER', layout, finalize=True,
                         element_justification='center', size=(480,200), return_keyboard_events=True)
+    
     eventHandling(window, personalize)
 
 
@@ -51,9 +53,9 @@ def mainMenu():
 
     window = sg.Window('Snake game - MENU', layout, finalize=True,
                         element_justification='center', size=(480,200), return_keyboard_events=True)
-
     personalize = {'board_size': 480, 'food': 1}
     eventHandling(window, personalize)
+
 
 
 if __name__ == '__main__':
