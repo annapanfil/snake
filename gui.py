@@ -25,11 +25,13 @@ def exitMenu(score, personalize):
 
     window = sg.Window('Snake game - GAME OVER', layout, finalize=True,
                         element_justification='center', size=(480,200), return_keyboard_events=True)
+    
     eventHandling(window, personalize)
 
 
 def settings(personalize):
     # sg.Popup("You thought you can change anything? xD\nGo and play")
+
     layout = [[sg.Text('Board size:\t' ), sg.Slider(range=(200, 800), default_value=personalize['board_size'],
                 resolution = 40, orientation='horizontal', key="board_size")],
               [sg.Text('Quantity of food:\t' ), sg.Slider(range=(1, 10), default_value=personalize['food'],
