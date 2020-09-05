@@ -26,7 +26,7 @@ Image from flaticon.com
 © Anna Panfil 2020
 
 <!-- links -->
-[python]: https://drive.google.com/drive/folders/1IoM1tIQTbqbW0BJGsf5OCD86Oklc-4ye
+[python]: https://www.python.org/downloads/
 [freeCodeCamp.org]: https://youtu.be/FfWpgLFMI7w
 [kiteco]: https://github.com/kiteco/python-youtube-code/blob/master/snake/snake.py
 [techwithTim]: https://techwithtim.net/tutorials/game-development-with-python/snake-pygame/tutorial-1/
