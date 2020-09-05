@@ -50,6 +50,7 @@ def game(personalize):
 
     return snake.length
 
+
   
 if __name__ == '__main__':
     mainMenu()
