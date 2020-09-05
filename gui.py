@@ -2,8 +2,7 @@ import PySimpleGUI as sg
 import os
 from main import *
 
-def eventHandling(window):
-    personalize = {}
+def eventHandling(window, personalize):
     while(True):
         event, _ = window.read()
         if event in (sg.WIN_CLOSED, 'Exit'):
@@ -11,14 +10,14 @@ def eventHandling(window):
         elif event in ("-PLAY-", '\r'):
             window.Close()
             score = game(personalize)
-            exitMenu(score)
+            exitMenu(score, personalize)
             break
         elif event == "-SETTINGS-":
             window.Hide()
-            personalize = settings()
+            personalize = settings(personalize)
             window.UnHide()
 
-def exitMenu(score):
+def exitMenu(score, personalize):
     layout = [[sg.Text("\nGAME OVER", font = 40, justification = 'center')],
               [sg.Text(f'Your score: {score}\n', font = 30, justification = 'center')],
               [sg.Button('Play again', key="-PLAY-")],
@@ -26,14 +25,14 @@ def exitMenu(score):
 
     window = sg.Window('Snake game - GAME OVER', layout, finalize=True,
                         element_justification='center', size=(480,200), return_keyboard_events=True)
-    eventHandling(window)
+    eventHandling(window, personalize)
 
 
-def settings():
+def settings(personalize):
     # sg.Popup("You thought you can change anything? xD\nGo and play")
-    layout = [[sg.Text('Board size:\t\t\t' ), sg.Slider(range=(200, 800), default_value=480,
+    layout = [[sg.Text('Board size:\t\t\t' ), sg.Slider(range=(200, 800), default_value=personalize['board_size'],
                 resolution = 40, orientation='horizontal', key="board_size")],
-              [sg.Text('Quantity of food (Not working yet):\t' ), sg.Slider(range=(1, 10), default_value=1,
+              [sg.Text('Quantity of food (Not working yet):\t' ), sg.Slider(range=(1, 10), default_value=personalize['food'],
                           resolution = 1, orientation='horizontal', key="food")],
               [sg.Button('Back', key="-MENU-")]]
 
@@ -52,7 +51,9 @@ def mainMenu():
 
     window = sg.Window('Snake game - MENU', layout, finalize=True,
                         element_justification='center', size=(480,200), return_keyboard_events=True)
-    eventHandling(window)
+
+    personalize = {'board_size': 480, 'food': 1}
+    eventHandling(window, personalize)
 
 
 if __name__ == '__main__':
