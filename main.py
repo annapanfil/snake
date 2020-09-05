@@ -1,9 +1,11 @@
 import pygame as pg
-from classes import *
 import os
+from classes import *
+from gui import *
 
-def game():
-    screen_size = 480
+def game(personalize):
+    screen_size = int(personalize['board_size']) if 'board_size' in personalize.keys() else 480
+    print (screen_size)
 
     # INITIALIZE PYGAME AND CREATE THE WINDOW
     pg.init()
@@ -49,4 +51,4 @@ def game():
     return snake.length
 
 if __name__ == '__main__':
-    game()
+    mainMenu()
