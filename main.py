@@ -1,12 +1,16 @@
 import pygame as pg
+import os
 from classes import *
+from gui import *
 
-def main():
-    screen_size = 480
+def game(personalize):
+    screen_size = int(personalize['board_size']) if 'board_size' in personalize.keys() else 480
+    print (screen_size)
 
     # INITIALIZE PYGAME AND CREATE THE WINDOW
     pg.init()
     screen = pg.display.set_mode((screen_size, screen_size))
+    # os.environ['SDL_VIDEO_WINDOW_POS'] = '1000,1000' # sets window position – DOESN'T WORK
 
     # Title and icon
     pg.display.set_caption("Snake game")
@@ -23,6 +27,7 @@ def main():
     running = True
     while running:
         clock.tick(10)
+
         # EVENTS HANDLING
         try:
             for event in pg.event.get():
@@ -43,5 +48,8 @@ def main():
 
     pg.quit()
 
+    return snake.length
+
+  
 if __name__ == '__main__':
-    main()
+    mainMenu()
