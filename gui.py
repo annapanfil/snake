@@ -24,7 +24,7 @@ def exitMenu(score, personalize):
               [sg.Button('Settings', key="-SETTINGS-"), sg.Exit()]]
 
     window = sg.Window('Snake game - GAME OVER', layout, finalize=True,
-                        element_justification='center', size=(480,200), return_keyboard_events=True)
+                        element_justification='center', size=(480,210), return_keyboard_events=True)
 
     eventHandling(window, personalize)
 
@@ -37,9 +37,10 @@ def settings(personalize):
               [sg.Text('Quantity of food:\t' ), sg.Slider(range=(1, 10), default_value=personalize['food'],
                 resolution = 1, orientation='horizontal', key="food")],
               [sg.Text("Snake speed:\t"), sg.OptionMenu(speeds, default_value=speeds[personalize['speed']-1], key="speed")],
+              [sg.Text("Show score:\t"), sg.Checkbox("", default=personalize['show_score'], key="show_score")],
               [sg.Button('Save', key="-MENU-")]]
 
-    window = sg.Window('Snake game - SETTINGS', layout, finalize=True, size=(480,200), return_keyboard_events=True, disable_close= True)
+    window = sg.Window('Snake game - SETTINGS', layout, finalize=True, size=(480,210), return_keyboard_events=True, disable_close= True)
     while(True):
         event, values = window.read()
         if event in ("-MENU-", '\r'):
@@ -54,9 +55,9 @@ def mainMenu():
              [sg.Button('Settings', key="-SETTINGS-"), sg.Exit()]]
 
     window = sg.Window('Snake game - MENU', layout, finalize=True,
-                        element_justification='center', size=(480,200), return_keyboard_events=True)
+                        element_justification='center', size=(480,210), return_keyboard_events=True)
 
-    personalize = {'board_size': 480, 'food': 1, 'speed': 2}
+    personalize = {'board_size': 480, 'food': 1, 'speed': 2, 'show_score': True}
     eventHandling(window, personalize)
 
 

@@ -18,7 +18,7 @@ def game(personalize):
     screen_size = int(personalize['board_size'])
     food_quantity = int(personalize['food'])
     speed = personalize['speed']*5
-    show_score = True
+    show_score = personalize['show_score']
 
     # INITIALIZE PYGAME AND CREATE THE WINDOW
     pg.init()
