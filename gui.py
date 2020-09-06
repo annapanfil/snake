@@ -16,12 +16,31 @@ def eventHandling(window, personalize):
             window.Hide()
             personalize = settings(personalize)
             window.UnHide()
+        elif event == "-INFO-":
+            window.Hide()
+            info()
+            window.UnHide()
+
+def info():
+
+    layout = [[sg.Text("CONTROLS", font = 40, justification = 'center')],
+              [sg.Text('Move snake:\tarrows or ADWS\nPause:\t\tP')],
+              [sg.Text("CREDITS", font = 40, justification = 'center')],
+              [sg.Text('Code available on GitHub: github.com/panka134\n©Anna Panfil 2020')],
+              [sg.Button('Back', key="-MENU-")]]
+
+    window = sg.Window('Snake game - INFO', layout, finalize=True, size=(480,210), return_keyboard_events=True, disable_close=True)
+    while(True):
+        event, _ = window.read()
+        if event in ("-MENU-", '\r'):
+            window.Close()
+            break
 
 def exitMenu(score, personalize):
     layout = [[sg.Text("\nGAME OVER", font = 40, justification = 'center')],
               [sg.Text(f'Your score: {score}\n', font = 30, justification = 'center')],
               [sg.Button('Play again', key="-PLAY-")],
-              [sg.Button('Settings', key="-SETTINGS-"), sg.Exit()]]
+              [sg.Button('Settings', key="-SETTINGS-"), sg.Button('Info', key='-INFO-'), sg.Exit()]]
 
     window = sg.Window('Snake game - GAME OVER', layout, finalize=True,
                         element_justification='center', size=(480,210), return_keyboard_events=True)
@@ -52,7 +71,7 @@ def mainMenu():
     sg.theme('Light Blue 3')
     layout = [[sg.Text('\nWelcome to snake game!\n', font = 40)],
              [sg.Button('Start game', key="-PLAY-")],
-             [sg.Button('Settings', key="-SETTINGS-"), sg.Exit()]]
+             [sg.Button('Settings', key="-SETTINGS-"), sg.Button('Info', key='-INFO-'), sg.Exit()]]
 
     window = sg.Window('Snake game - MENU', layout, finalize=True,
                         element_justification='center', size=(480,210), return_keyboard_events=True)
