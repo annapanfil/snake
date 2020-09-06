@@ -10,6 +10,10 @@ class GameOver(Exception):
     def __init__(self, *args, **kwargs):
         super(GameOver, self).__init__(*args, **kwargs)
 
+class GamePause(Exception):
+    def __init__(self, *args, **kwargs):
+        super(GamePause, self).__init__(*args, **kwargs)
+
 class Board():
     def __init__(self, surface, field_size = 20, light_color=(98, 175, 243), dark_color=(98, 102, 243)):
         self.field_size = field_size
@@ -64,8 +68,10 @@ class Snake():
             self.turn(UP)
         elif event.key in DOWN_KEYS:
             self.turn(DOWN)
-        else:
-            print("Niepoprawny klawisz:", event.key)
+        elif event.key == ord('p'):
+            raise GamePause
+        # else:
+            # print("Niepoprawny klawisz:", event.key)
 
     def move(self, event, board_size, food):
         # move == change head position, delete end of tail
