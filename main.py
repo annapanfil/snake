@@ -1,6 +1,6 @@
 import pygame as pg
 # import os
-import time
+# import time
 from classes import *
 from gui import *
 
@@ -9,6 +9,7 @@ def display(board, snake, food):
     snake.display(board)
     for f in food:
         f.display(board)
+
     pg.display.update()
 
 def game(personalize):
@@ -17,6 +18,7 @@ def game(personalize):
     screen_size = int(personalize['board_size'])
     food_quantity = int(personalize['food'])
     speed = personalize['speed']*5
+    show_score = True
 
     # INITIALIZE PYGAME AND CREATE THE WINDOW
     pg.init()
@@ -46,6 +48,8 @@ def game(personalize):
         pg.display.update()
         clock.tick(1)
 
+    font = pg.font.SysFont(None, 30)
+
     # GAME LOOP
     running = True
     while running:
@@ -65,6 +69,10 @@ def game(personalize):
             running = False
 
         display(board, snake, food)
+        if show_score:
+            text = font.render(f"Score: {snake.length}", True, (0,0,0))
+            screen.blit(text, (10, 20))
+            pg.display.update()
 
     clock.tick(1)
     pg.quit()
