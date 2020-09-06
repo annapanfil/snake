@@ -1,12 +1,24 @@
 import pygame as pg
-import os
+# import os
+# import time
 from classes import *
 from gui import *
 
+def display(board, snake, food):
+    board.display()
+    snake.display(board)
+    for f in food:
+        f.display(board)
+
+    pg.display.update()
+
 def game(personalize):
+    # print(personalize)
 
     screen_size = int(personalize['board_size'])
     food_quantity = int(personalize['food'])
+    speed = personalize['speed']*5
+    show_score = personalize['show_score']
 
     # INITIALIZE PYGAME AND CREATE THE WINDOW
     pg.init()
@@ -21,15 +33,28 @@ def game(personalize):
     clock = pg.time.Clock()
 
     board = Board(surface = screen)
-    snake = Snake(start_position = board.sizeInFields/2)
-    food = []
-    for _ in range(food_quantity):
-        food.append(Food(board_size = board.sizeInFields))
+    center = board.sizeInFields/2
+    snake = Snake(start_position = center)
+    food = [Food(board_size = center) for _ in range(food_quantity)]
+
+
+    # display 3...2...1...
+    font_big = pg.font.SysFont(None, 300)
+
+    for i in range(3,0,-1):
+        text = font_big.render(f"{i}", True, (0,0,0))
+        display(board, snake, food)
+        screen.blit(text, ((center*board.field_size)-50, (center*board.field_size)-80))
+        pg.display.update()
+        clock.tick(1)
+
+    font = pg.font.SysFont(None, 30)
 
     # GAME LOOP
     running = True
+    paused = False
     while running:
-        clock.tick(10)
+        clock.tick(speed)
 
         # EVENTS HANDLING
         try:
@@ -39,17 +64,27 @@ def game(personalize):
                 elif event.type == pg.KEYDOWN:
                     snake.changeDirection(event)
 
-            snake.move(event, board.sizeInFields, food)
+            if not(paused):
+                snake.move(event, board.sizeInFields, food)
+
         except GameOver:
             print("GAME OVER\nYour score:", snake.length)
             running = False
+        except GamePause:
+            paused = not(paused)
 
-        board.display()
-        snake.display(board)
-        for f in food:
-            f.display(board)
-        pg.display.update()
+        display(board, snake, food)
+        if show_score:
+            text = font.render(f"Score: {snake.length}", True, (0,0,0))
+            screen.blit(text, (10, 20))
+            pg.display.update()
 
+        if paused:
+            text = font.render("[P]aused", True, (0,0,0))
+            screen.blit(text, (screen_size-100, 20))
+            pg.display.update()
+
+    clock.tick(1)
     pg.quit()
 
     return snake.length
