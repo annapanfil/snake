@@ -2,6 +2,8 @@ import PySimpleGUI as sg
 import os
 from main import *
 
+icon="snake.png"
+
 def eventHandling(window, personalize):
     while(True):
         event, _ = window.read()
@@ -25,11 +27,13 @@ def info():
 
     layout = [[sg.Text("CONTROLS", font = 40, justification = 'center')],
               [sg.Text('Move snake:\tarrows or ADWS\nPause:\t\tP')],
+              [sg.Text("RULES", font = 40, justification = 'center')],
+              [sg.Text('Eat food to increase length (and the score).\nDo not eat your tail.\nDo not hit the wall.')],
               [sg.Text("CREDITS", font = 40, justification = 'center')],
               [sg.Text('Code available on GitHub: github.com/panka134\n©Anna Panfil 2020')],
               [sg.Button('Back', key="-MENU-")]]
 
-    window = sg.Window('Snake game - INFO', layout, finalize=True, size=(480,210), return_keyboard_events=True, disable_close=True)
+    window = sg.Window('Snake game - INFO', layout, finalize=True, size=(480,300), return_keyboard_events=True, disable_close=True, icon=icon)
     while(True):
         event, _ = window.read()
         if event in ("-MENU-", '\r'):
@@ -42,7 +46,7 @@ def exitMenu(score, personalize):
               [sg.Button('Play again', key="-PLAY-")],
               [sg.Button('Settings', key="-SETTINGS-"), sg.Button('Info', key='-INFO-'), sg.Exit()]]
 
-    window = sg.Window('Snake game - GAME OVER', layout, finalize=True,
+    window = sg.Window('Snake game - GAME OVER', layout, finalize=True, icon=icon,
                         element_justification='center', size=(480,210), return_keyboard_events=True)
 
     eventHandling(window, personalize)
@@ -59,7 +63,7 @@ def settings(personalize):
               [sg.Text("Show score:\t"), sg.Checkbox("", default=personalize['show_score'], key="show_score")],
               [sg.Button('Save', key="-MENU-")]]
 
-    window = sg.Window('Snake game - SETTINGS', layout, finalize=True, size=(480,210), return_keyboard_events=True, disable_close= True)
+    window = sg.Window('Snake game - SETTINGS', layout, finalize=True, size=(480,210), return_keyboard_events=True, disable_close= True, icon=icon)
     while(True):
         event, values = window.read()
         if event in ("-MENU-", '\r'):
@@ -73,7 +77,7 @@ def mainMenu():
              [sg.Button('Start game', key="-PLAY-")],
              [sg.Button('Settings', key="-SETTINGS-"), sg.Button('Info', key='-INFO-'), sg.Exit()]]
 
-    window = sg.Window('Snake game - MENU', layout, finalize=True,
+    window = sg.Window('Snake game - MENU', layout, finalize=True, icon=icon,
                         element_justification='center', size=(480,210), return_keyboard_events=True)
 
     personalize = {'board_size': 480, 'food': 1, 'speed': 2, 'show_score': True}
