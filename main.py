@@ -4,9 +4,12 @@ from classes import *
 from gui import *
 
 def game(personalize):
+    # print(personalize)
 
     screen_size = int(personalize['board_size'])
     food_quantity = int(personalize['food'])
+    speed = personalize['speed']*5
+
 
     # INITIALIZE PYGAME AND CREATE THE WINDOW
     pg.init()
@@ -29,7 +32,7 @@ def game(personalize):
     # GAME LOOP
     running = True
     while running:
-        clock.tick(10)
+        clock.tick(speed)
 
         # EVENTS HANDLING
         try:

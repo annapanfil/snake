@@ -10,7 +10,7 @@ def eventHandling(window, personalize):
         elif event in ("-PLAY-", '\r'):
             window.Close()
             score = game(personalize)
-            exitMenu(score, personalize)        # rekurencja – to chyba niedobrze?
+            exitMenu(score, personalize)        # rekurencja – to chyba niedobrze
             break
         elif event == "-SETTINGS-":
             window.Hide()
@@ -25,24 +25,26 @@ def exitMenu(score, personalize):
 
     window = sg.Window('Snake game - GAME OVER', layout, finalize=True,
                         element_justification='center', size=(480,200), return_keyboard_events=True)
-    
+
     eventHandling(window, personalize)
 
 
 def settings(personalize):
     # sg.Popup("You thought you can change anything? xD\nGo and play")
-
+    speeds = ["slow", "normal", "fast", "lightning fast"]
     layout = [[sg.Text('Board size:\t' ), sg.Slider(range=(200, 800), default_value=personalize['board_size'],
                 resolution = 40, orientation='horizontal', key="board_size")],
               [sg.Text('Quantity of food:\t' ), sg.Slider(range=(1, 10), default_value=personalize['food'],
-                          resolution = 1, orientation='horizontal', key="food")],
-              [sg.Button('Back', key="-MENU-")]]
+                resolution = 1, orientation='horizontal', key="food")],
+              [sg.Text("Snake speed:\t"), sg.OptionMenu(speeds, default_value=speeds[personalize['speed']-1], key="speed")],
+              [sg.Button('Save', key="-MENU-")]]
 
     window = sg.Window('Snake game - SETTINGS', layout, finalize=True, size=(480,200), return_keyboard_events=True, disable_close= True)
     while(True):
         event, values = window.read()
         if event in ("-MENU-", '\r'):
             window.Close()
+            values['speed'] = speeds.index(values['speed'])+1
             return(values)
 
 def mainMenu():
@@ -54,7 +56,7 @@ def mainMenu():
     window = sg.Window('Snake game - MENU', layout, finalize=True,
                         element_justification='center', size=(480,200), return_keyboard_events=True)
 
-    personalize = {'board_size': 480, 'food': 1}
+    personalize = {'board_size': 480, 'food': 1, 'speed': 2}
     eventHandling(window, personalize)
 
 
