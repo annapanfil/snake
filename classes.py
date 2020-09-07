@@ -41,12 +41,13 @@ class Board():
 
 class Snake():
 
-    def __init__(self, start_position, wall_die, color = (243, 98, 102)):
+    def __init__(self, start_position, wall_die, speed, color = (243, 98, 102)):
         self.length = 1
         self.positions = [[start_position, start_position]] # position (in fields)
         self.color = color
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
         self.wall_die = wall_die # if True – die from wall, if False – teleport
+        self.speed = speed
 
     def turn(self, turn_direcions):
         # check if eating its tail
@@ -74,7 +75,7 @@ class Snake():
         # else:
             # print("Niepoprawny klawisz:", event.key)
 
-    def move(self, event, board_size, food):
+    def move(self, event, board_size, food, speed_increase):
         # move == change head position, delete end of tail
 
         head = self.positions[0]
@@ -99,7 +100,9 @@ class Snake():
         for f in food:
             if new_head == f.position:
                 self.length += 1
+                if speed_increase: self.speed += 0.3
                 f.eat(board_size)
+
         if self.length != len(self.positions):
             self.positions.pop()
 
