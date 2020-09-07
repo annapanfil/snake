@@ -34,9 +34,8 @@ def game(personalize):
 
     board = Board(surface = screen)
     center = board.sizeInFields/2
-    snake = Snake(start_position = center)
+    snake = Snake(start_position = center, wall_die = personalize['wall_die'] )
     food = [Food(board_size = center) for _ in range(food_quantity)]
-
 
     # display 3...2...1...
     font_big = pg.font.SysFont(None, 300)

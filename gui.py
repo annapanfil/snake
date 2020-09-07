@@ -61,9 +61,10 @@ def settings(personalize):
                 resolution = 1, orientation='horizontal', key="food")],
               [sg.Text("Snake speed:\t"), sg.OptionMenu(speeds, default_value=speeds[personalize['speed']-1], key="speed")],
               [sg.Text("Show score:\t"), sg.Checkbox("", default=personalize['show_score'], key="show_score")],
+              [sg.Checkbox("Die from walls:\t", default=personalize['wall_die'], key='wall_die')],
               [sg.Button('Save', key="-MENU-")]]
 
-    window = sg.Window('Snake game - SETTINGS', layout, finalize=True, size=(480,210), return_keyboard_events=True, disable_close= True, icon=icon)
+    window = sg.Window('Snake game - SETTINGS', layout, finalize=True, size=(480,300), return_keyboard_events=True, disable_close= True, icon=icon)
     while(True):
         event, values = window.read()
         if event in ("-MENU-", '\r'):
@@ -80,7 +81,7 @@ def mainMenu():
     window = sg.Window('Snake game - MENU', layout, finalize=True, icon=icon,
                         element_justification='center', size=(480,210), return_keyboard_events=True)
 
-    personalize = {'board_size': 480, 'food': 1, 'speed': 2, 'show_score': True}
+    personalize = {'board_size': 480, 'food': 1, 'speed': 2, 'show_score': True, 'wall_die': True}
     eventHandling(window, personalize)
 
 

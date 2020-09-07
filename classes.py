@@ -41,11 +41,12 @@ class Board():
 
 class Snake():
 
-    def __init__(self, start_position, color = (243, 98, 102)):
+    def __init__(self, start_position, wall_die, color = (243, 98, 102)):
         self.length = 1
         self.positions = [[start_position, start_position]] # position (in fields)
         self.color = color
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
+        self.wall_die = wall_die # if True – die from wall, if False – teleport
 
     def turn(self, turn_direcions):
         # check if eating its tail
@@ -68,7 +69,7 @@ class Snake():
             self.turn(UP)
         elif event.key in DOWN_KEYS:
             self.turn(DOWN)
-        elif event.key == ord('p'):
+        elif event.key in {ord('p'), ord(' ')}:
             raise GamePause
         # else:
             # print("Niepoprawny klawisz:", event.key)
@@ -84,16 +85,21 @@ class Snake():
             raise GameOver
 
         # check if hiting the border
-        elif new_head[0] < 0 or new_head[0] > board_size-1 or new_head[1] < 0 or new_head[1] > board_size-1:
-            raise GameOver
+        elif not(0 <= new_head[0] < board_size and  0 <= new_head[1] < board_size):
+            if self.wall_die:
+                raise GameOver
+            else:
+                if new_head[0] < 0: new_head[0] = board_size
+                elif new_head[0] == board_size: new_head[0] = 0
+                elif new_head[1] < 0: new_head[1] = board_size
+                elif new_head[1] == board_size: new_head[1] = 0
 
-        else:
-            self.positions.insert(0, new_head)
-            # check if eating food
-            for f in food:
-                if new_head == f.position:
-                    self.length += 1
-                    f.eat(board_size)
+        self.positions.insert(0, new_head)
+        # check if eating food
+        for f in food:
+            if new_head == f.position:
+                self.length += 1
+                f.eat(board_size)
         if self.length != len(self.positions):
             self.positions.pop()
 
