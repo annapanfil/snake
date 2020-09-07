@@ -17,7 +17,7 @@ def game(personalize):
 
     screen_size = int(personalize['board_size'])
     food_quantity = int(personalize['food'])
-    speed = personalize['speed']*5
+    speed_increase = personalize['speed_increase']
     show_score = personalize['show_score']
 
     # INITIALIZE PYGAME AND CREATE THE WINDOW
@@ -34,9 +34,9 @@ def game(personalize):
 
     board = Board(surface = screen)
     center = board.sizeInFields/2
-    snake = Snake(start_position = center)
-    food = [Food(board_size = center) for _ in range(food_quantity)]
+    snake = Snake(start_position = center, wall_die = personalize['wall_die'], speed = personalize['speed']*5)
 
+    food = [Food(board_size = center) for _ in range(food_quantity)]
 
     # display 3...2...1...
     font_big = pg.font.SysFont(None, 300)
@@ -54,8 +54,7 @@ def game(personalize):
     running = True
     paused = False
     while running:
-        clock.tick(speed)
-
+        clock.tick(snake.speed)
         # EVENTS HANDLING
         try:
             for event in pg.event.get():
@@ -65,7 +64,7 @@ def game(personalize):
                     snake.changeDirection(event)
 
             if not(paused):
-                snake.move(event, board.sizeInFields, food)
+                snake.move(event, board.sizeInFields, food, speed_increase)
 
         except GameOver:
             print("GAME OVER\nYour score:", snake.length)
