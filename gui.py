@@ -77,6 +77,7 @@ def settings(personalize):
               [sg.Button(lang['save'], key="-MENU-")]]
 
     window = sg.Window('Snake game - SETTINGS', layout, finalize=True, size=(480,280), return_keyboard_events=True, icon=icon)
+
     while(True):
         event, values = window.read()
         if event == sg.WIN_CLOSED:
@@ -117,7 +118,7 @@ def main():
         elif choice == 'info':
             info(lang)
             choice = mainMenu(lang)
-
+            
 
 if __name__ == '__main__':
     main()
