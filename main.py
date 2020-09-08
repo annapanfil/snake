@@ -1,6 +1,7 @@
 import pygame as pg
 from classes import *
 from gui import *
+from language import *
 
 def display(board, snake, food):
     board.display()
