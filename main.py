@@ -1,8 +1,7 @@
 import pygame as pg
-# import os
-# import time
 from classes import *
 from gui import *
+from language import *
 
 def display(board, snake, food):
     board.display()
@@ -13,7 +12,7 @@ def display(board, snake, food):
     pg.display.update()
 
 def game(personalize):
-    # print(personalize)
+    lang = languages[personalize['lang']]
 
     screen_size = int(personalize['board_size'])
     food_quantity = int(personalize['food'])
@@ -26,7 +25,7 @@ def game(personalize):
     # os.environ['SDL_VIDEO_WINDOW_POS'] = '1000,1000' # sets window position – DOESN'T WORK
 
     # Title and icon
-    pg.display.set_caption("Snake game")
+    pg.display.set_caption("Snake")
     icon = pg.image.load("snake.png")
     pg.display.set_icon(icon)
 
@@ -67,19 +66,19 @@ def game(personalize):
                 snake.move(event, board.sizeInFields, food, speed_increase)
 
         except GameOver:
-            print("GAME OVER\nYour score:", snake.length)
+            print(lang['your_score'].format(snake.length))
             running = False
         except GamePause:
             paused = not(paused)
 
         display(board, snake, food)
         if show_score:
-            text = font.render(f"Score: {snake.length}", True, (0,0,0))
+            text = font.render(lang['score'].format(snake.length), True, (0,0,0))
             screen.blit(text, (10, 20))
             pg.display.update()
 
         if paused:
-            text = font.render("[P]aused", True, (0,0,0))
+            text = font.render(lang['pause'], True, (0,0,0))
             screen.blit(text, (screen_size-100, 20))
             pg.display.update()
 
@@ -89,4 +88,4 @@ def game(personalize):
     return snake.length
 
 if __name__ == '__main__':
-    mainMenu()
+    main()

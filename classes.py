@@ -99,11 +99,10 @@ class Snake():
         # check if eating food
         for f in food:
             if new_head == f.position:
-                self.length += 1
                 if speed_increase: self.speed += 0.3
-                f.eat(board_size)
+                f.eat(self, board_size)
 
-        if self.length != len(self.positions):
+        if self.length < len(self.positions):
             self.positions.pop()
 
 
@@ -113,13 +112,16 @@ class Snake():
             pg.draw.rect(board.surface, self.color, rectangle)
 
 class Food():
-    def __init__(self, board_size, color = (175, 243, 98)):
+    def __init__(self, board_size):
         self.position = [random.randint(0,board_size-1), random.randint(0,board_size-1)]
-        self.color = color
+        self.color = (243, 166, 98) if random.randint(0,10) == 0 else (175, 243, 98) # yellow or orange (10% chance)
 
     def display(self, board):
         rectangle = pg.Rect((self.position[0]*board.field_size, self.position[1]*board.field_size), (board.field_size, board.field_size))
         pg.draw.rect(board.surface, self.color, rectangle)
 
-    def eat(self, board_size):
+    def eat(self, snake, board_size):
+        snake.length += 1 if self.color == (175, 243, 98) else 2 # yellow or orange
+        # produce "new" food – new position and color
         self.position = [random.randint(0,board_size-1), random.randint(0,board_size-1)]
+        self.color = (243, 166, 98) if random.randint(0,10) == 0 else (175, 243, 98) # yellow or orange (10% chance)
