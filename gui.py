@@ -6,11 +6,20 @@ from language import *
 icon = "snake.png"
 
 def eventHandling(window):
+    QT_ENTER_KEY1 = 'special 16777220'
+    QT_ENTER_KEY2 = 'special 16777221'
+
     while(True):
         event, _ = window.read()
         if event in (sg.WIN_CLOSED, '-EXIT-'):
             return 'exit'
-        elif event in ("-PLAY-", '\r'):
+
+        if event in ('\r', QT_ENTER_KEY1, QT_ENTER_KEY2):
+            elem = window.find_element_with_focus()
+            if elem is not None and elem.Type == sg.ELEM_TYPE_BUTTON:       # if it's a button element, click it
+                elem.Click()
+
+        if event in ("-PLAY-"):
             window.Close()
             return 'play'
 
@@ -31,7 +40,7 @@ def info(lang):
               [sg.Text(lang['credits'])],
               [sg.Button(lang['back'], key="-MENU-")]]
 
-    window = sg.Window(lang['info_window'], layout, finalize=True, size=(480,330), return_keyboard_events=True, icon=icon)
+    window = sg.Window(lang['info_window'], layout, finalize=True, size=(480,350), return_keyboard_events=True, icon=icon)
     while(True):
         event, _ = window.read()
         if event == sg.WIN_CLOSED:

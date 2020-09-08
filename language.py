@@ -29,7 +29,7 @@ languages = {
     'h1_controls': "CONTROLS",
     'controls': 'Move snake:\tarrows or ADWS\nPause:\t\tP or space',
     'h1_rules': "RULES",
-    'rules': "Eat food to increase length (and the score).\nDo not eat your tail.\nDo not hit the wall (or teleport after touching the wall – choose in settings).",
+    'rules': "Eat food to increase length (and the score).\nOrange food will give you two points.\nDo not eat your tail.\nDo not hit the wall (or teleport after touching the wall – choose in settings).",
     'credits': 'Code available on GitHub: github.com/panka134\n©Anna Panfil 2020',
     'back' : "Back",
 
@@ -70,7 +70,7 @@ languages = {
     'h1_controls': "STEROWANIE",
     'controls': 'Poruszanie się:\tstrzałki lub ADWS\nPauza:\t\tP lub spacja',
     'h1_rules': "ZASADY",
-    'rules': "Jedz, aby zwiększyć długość węża (i wynik).\nNie jedz wężowego ogona.\nNie uderzaj w ściany (albo po uderzeniu przenieś się na drugą stronę –\n – wybierz w ustawieniach).",
+    'rules': "Jedz, aby zwiększyć długość węża (i wynik).\nPomarańczowe jedzenie jest warte dwa punkty.\nNie jedz wężowego ogona.\nNie uderzaj w ściany (albo po uderzeniu przenieś się na drugą stronę –\n – wybierz w ustawieniach).",
     'credits': 'Kod dostępny na GitHubie: github.com/panka134\n©Anna Panfil 2020',
     'back' : "Powrót",
 
