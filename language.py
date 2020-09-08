@@ -1,5 +1,9 @@
 languages = {
   'en':{
+    #GAME
+    'score': "Score: {}",
+    'pause': "[P]aused",
+
     #MENU
     'menu_window': 'Snake – MENU',
     'welcome': '\nWelcome to snake game!\n',
@@ -32,11 +36,15 @@ languages = {
     #EXIT
     'exit_window': "Snake – GAME OVER",
     'game_over': "\nGAME OVER",
-    'score': 'Your score: {}\n',
+    'your_score': 'Your score: {}\n',
     'play_again': "Play again"
     },
 
 'pl':{
+    #GRA
+    'score': "Wynik: {}",
+    'pause': "[P]auza",
+
     #MENU
     'menu_window': 'Snake – MENU',
     'welcome': '\nWitaj w grze Snake!\n',
@@ -47,7 +55,7 @@ languages = {
 
     #USTAWIENIA
     'settings_window': 'Snake – USTAWIENIA',
-    'language': 'Język:\t',
+    'language': 'Język:\t\t',
     'board_size': 'Wielkość planszy:\t',
     'food_quantity': 'Ilość jedzenia:\t',
     'speed': "Prędkość węża:\t",
@@ -58,7 +66,7 @@ languages = {
     'save': "Zapisz",
 
     #INFORMACJE
-    'info_indow':  'Snake – INFORMACJE',
+    'info_window':  'Snake – INFORMACJE',
     'h1_controls': "STEROWANIE",
     'controls': 'Poruszanie się:\tstrzałki lub ADWS\nPauza:\t\tP lub spacja',
     'h1_rules': "ZASADY",
@@ -69,7 +77,7 @@ languages = {
     #KONIEC GRY
     'exit_window': "Snake – KONIEC GRY",
     'game_over': "\nKONIEC GRY",
-    'score': 'Twój wynik: {}\n',
+    'your_score': 'Twój wynik: {}\n',
     'play_again': "Zagraj ponownie"
     }
 }

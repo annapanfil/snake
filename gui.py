@@ -3,41 +3,40 @@ import os
 from main import *
 from language import *
 
-icon="snake.png"
+icon = "snake.png"
 
-def eventHandling(window, personalize):
+def eventHandling(window):
     while(True):
         event, _ = window.read()
-        if event in (sg.WIN_CLOSED, 'Exit'):
-            break
+        if event in (sg.WIN_CLOSED, '-EXIT-'):
+            return 'exit'
         elif event in ("-PLAY-", '\r'):
             window.Close()
-            score = game(personalize)
-            exitMenu(score, personalize)        # rekurencja – to chyba niedobrze
-            break
+            return 'play'
+
         elif event == "-SETTINGS-":
-            window.Hide()
-            personalize = settings(personalize)
-            window.UnHide()
+            window.Close()
+            return 'settings'
+
         elif event == "-INFO-":
-            window.Hide()
-            info(languages[personalize['lang']])
-            window.UnHide()
+            window.Close()
+            return 'info'
 
 def info(lang):
-
     layout = [[sg.Text(lang['h1_controls'], font = 40, justification = 'center')],
               [sg.Text(lang['controls'])],
               [sg.Text(lang['h1_rules'], font = 40, justification = 'center')],
               [sg.Text(lang['rules'])],
-              [sg.Text("______________________", font = 40, justification = 'center')],
+              [sg.Text("___________________________", font = 40, justification = 'center')],
               [sg.Text(lang['credits'])],
               [sg.Button(lang['back'], key="-MENU-")]]
 
-    window = sg.Window(lang['back'], layout, finalize=True, size=(480,330), return_keyboard_events=True, disable_close=True, icon=icon)
+    window = sg.Window(lang['info_window'], layout, finalize=True, size=(480,330), return_keyboard_events=True, icon=icon)
     while(True):
         event, _ = window.read()
-        if event in ("-MENU-", '\r'):
+        if event == sg.WIN_CLOSED:
+            break
+        elif event in ("-MENU-", '\r'):
             window.Close()
             break
 
@@ -45,15 +44,14 @@ def exitMenu(score, personalize):
     lang = languages[personalize['lang']]
 
     layout = [[sg.Text(lang['game_over'], font = 40, justification = 'center')],
-              [sg.Text(lang['score'].format(score), font = 30, justification = 'center')],
+              [sg.Text(lang['your_score'].format(score), font = 30, justification = 'center')],
               [sg.Button(lang['play_again'], key="-PLAY-")],
-              [sg.Button(lang['settings'], key="-SETTINGS-"), sg.Button(lang['info'], key='-INFO-'), sg.Exit(button_text=lang['exit'])]]
+              [sg.Button(lang['settings'], key="-SETTINGS-"), sg.Button(lang['info'], key='-INFO-'), sg.Button(lang['exit'], key='-EXIT-')]]
 
     window = sg.Window(lang['exit_window'], layout, finalize=True, icon=icon,
                         element_justification='center', size=(480,210), return_keyboard_events=True)
 
-    eventHandling(window, personalize)
-
+    return eventHandling(window)
 
 def settings(personalize):
     lang = languages[personalize['lang']]
@@ -69,32 +67,48 @@ def settings(personalize):
               [sg.Checkbox(lang['show_score'], default=personalize['show_score'], key="show_score")],
               [sg.Button(lang['save'], key="-MENU-")]]
 
-    window = sg.Window('Snake game - SETTINGS', layout, finalize=True, size=(480,280), return_keyboard_events=True, disable_close= True, icon=icon)
+    window = sg.Window('Snake game - SETTINGS', layout, finalize=True, size=(480,280), return_keyboard_events=True, icon=icon)
     while(True):
         event, values = window.read()
+        if event == sg.WIN_CLOSED:
+            return(personalize)
         if event in ("-MENU-", '\r'):
             window.Close()
             values['speed'] = lang['speeds'].index(values['speed'])+1
             return(values)
 
-def mainMenu():
-    # default settings
-    #FIXME: personalize only if not personalized
-    #FIXME: language in personalize as string
-    if 'personalize' not in locals(): personalize = {'lang': 'pl', 'board_size': 480, 'food': 1, 'speed': 1, 'speed_increase': True, 'show_score': True, 'wall_die': True}
-    lang = languages[personalize['lang']]
-
+def mainMenu(lang):
     sg.theme('Light Blue 3')
     layout = [[sg.Text(lang['welcome'], font = 40)],
              [sg.Button(lang['start'], key="-PLAY-")],
-             [sg.Button(lang['settings'], key="-SETTINGS-"), sg.Button(lang['info'], key='-INFO-'), sg.Exit(button_text=lang['exit'])]]
-             # FIXME: Exit doesn't work
+             [sg.Button(lang['settings'], key="-SETTINGS-"), sg.Button(lang['info'], key='-INFO-'), sg.Button(lang['exit'], key='-EXIT-')]]
 
     window = sg.Window(lang['menu_window'], layout, finalize=True, icon=icon,
                         element_justification='center', size=(480,200), return_keyboard_events=True)
 
-    eventHandling(window, personalize)
+    return eventHandling(window)
+
+def main():
+    # default settings
+    if 'personalize' not in locals(): personalize = {'lang': 'pl', 'board_size': 480, 'food': 1, 'speed': 1, 'speed_increase': True, 'show_score': True, 'wall_die': True}
+    lang = languages[personalize['lang']]
+
+    choice = mainMenu(lang)
+
+    while choice != 'exit':
+        if choice == 'play':
+            score = game(personalize)
+            choice = exitMenu(score, personalize)
+
+        elif choice == 'settings' :
+            personalize = settings(personalize)
+            lang = languages[personalize['lang']]
+            choice = mainMenu(lang)
+
+        elif choice == 'info':
+            info(lang)
+            choice = mainMenu(lang)
 
 
 if __name__ == '__main__':
-    mainMenu()
+    main()
