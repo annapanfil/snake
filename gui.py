@@ -21,7 +21,7 @@ def eventHandling(window, personalize):
             window.UnHide()
         elif event == "-INFO-":
             window.Hide()
-            info(personalize['lang'])
+            info(languages[personalize['lang']])
             window.UnHide()
 
 def info(lang):
@@ -42,7 +42,7 @@ def info(lang):
             break
 
 def exitMenu(score, personalize):
-    lang = personalize['lang']
+    lang = languages[personalize['lang']]
 
     layout = [[sg.Text(lang['game_over'], font = 40, justification = 'center')],
               [sg.Text(lang['score'].format(score), font = 30, justification = 'center')],
@@ -56,9 +56,9 @@ def exitMenu(score, personalize):
 
 
 def settings(personalize):
-    lang = personalize['lang']
-    languages = ['pl', 'en']
-    layout = [[sg.Text(lang['language']), sg.OptionMenu(languages, default_value=personalize['lang'], key='lang')],
+    lang = languages[personalize['lang']]
+
+    layout = [[sg.Text(lang['language']), sg.OptionMenu(languages.keys(), default_value=personalize['lang'], key='lang')],
               [sg.Text(lang['board_size']), sg.Slider(range=(200, 800), default_value=personalize['board_size'],
                 resolution = 40, orientation='horizontal', key="board_size")],
               [sg.Text(lang['food_quantity']), sg.Slider(range=(1, 10), default_value=personalize['food'],
@@ -81,8 +81,8 @@ def mainMenu():
     # default settings
     #FIXME: personalize only if not personalized
     #FIXME: language in personalize as string
-    personalize = {'lang': pl, 'board_size': 480, 'food': 1, 'speed': 1, 'speed_increase': True, 'show_score': True, 'wall_die': True}
-    lang = personalize['lang']
+    if 'personalize' not in locals(): personalize = {'lang': 'pl', 'board_size': 480, 'food': 1, 'speed': 1, 'speed_increase': True, 'show_score': True, 'wall_die': True}
+    lang = languages[personalize['lang']]
 
     sg.theme('Light Blue 3')
     layout = [[sg.Text(lang['welcome'], font = 40)],

@@ -1,4 +1,5 @@
-en={
+languages = {
+  'en':{
     #MENU
     'menu_window': 'Snake – MENU',
     'welcome': '\nWelcome to snake game!\n',
@@ -33,9 +34,9 @@ en={
     'game_over': "\nGAME OVER",
     'score': 'Your score: {}\n',
     'play_again': "Play again"
-    }
+    },
 
-pl={
+'pl':{
     #MENU
     'menu_window': 'Snake – MENU',
     'welcome': '\nWitaj w grze Snake!\n',
@@ -71,3 +72,4 @@ pl={
     'score': 'Twój wynik: {}\n',
     'play_again': "Zagraj ponownie"
     }
+}
