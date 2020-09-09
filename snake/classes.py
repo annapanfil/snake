@@ -107,9 +107,13 @@ class Snake():
 
 
     def display(self, board: Board):
+        head = True
         for coords in self.positions:
             rectangle = pg.Rect((coords[0]*board.field_size, coords[1]*board.field_size), (board.field_size, board.field_size))
-            pg.draw.rect(board.surface, self.color, rectangle)
+            if head:
+                pg.draw.rect(board.surface, (213, 86, 89), rectangle)
+                head = False
+            else: pg.draw.rect(board.surface, self.color, rectangle)
 
 class Food():
     def __init__(self, board_size):

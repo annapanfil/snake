@@ -1,6 +1,5 @@
 # TODO: enter handling in settings and info
 # TODO: focus
-# TODO: snake head color
 
 import PySimpleGUI as sg
 import os
