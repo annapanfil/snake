@@ -6,6 +6,9 @@ RIGHT = (1,0)
 UP = (0,-1)
 DOWN = (0,1)
 
+RED = (243, 98, 102)
+ORANGE = (243, 166, 98)
+
 class GameOver(Exception):
     def __init__(self, *args, **kwargs):
         super(GameOver, self).__init__(*args, **kwargs)
@@ -41,7 +44,7 @@ class Board():
 
 class Snake():
 
-    def __init__(self, start_position, wall_die, speed, color = (243, 98, 102)):
+    def __init__(self, start_position, wall_die, speed, color =  (175, 243, 98)):
         self.length = 1
         self.positions = [[start_position, start_position]] # position (in fields)
         self.color = color
@@ -105,27 +108,26 @@ class Snake():
         if self.length < len(self.positions):
             self.positions.pop()
 
-
     def display(self, board: Board):
         head = True
         for coords in self.positions:
             rectangle = pg.Rect((coords[0]*board.field_size, coords[1]*board.field_size), (board.field_size, board.field_size))
             if head:
-                pg.draw.rect(board.surface, (213, 86, 89), rectangle)
+                pg.draw.rect(board.surface, (218, 247, 166), rectangle)
                 head = False
             else: pg.draw.rect(board.surface, self.color, rectangle)
 
 class Food():
     def __init__(self, board_size):
         self.position = [random.randint(0,board_size-1), random.randint(0,board_size-1)]
-        self.color = (243, 166, 98) if random.randint(0,10) == 0 else (175, 243, 98) # yellow or orange (10% chance)
+        self.color = ORANGE if random.randint(0,10) == 0 else RED # red or orange (10% chance)
 
     def display(self, board):
         rectangle = pg.Rect((self.position[0]*board.field_size, self.position[1]*board.field_size), (board.field_size, board.field_size))
         pg.draw.rect(board.surface, self.color, rectangle)
 
     def eat(self, snake, board_size):
-        snake.length += 1 if self.color == (175, 243, 98) else 2 # yellow or orange
+        snake.length += 1 if self.color == RED else 2 # red or orange
         # produce "new" food – new position and color
         self.position = [random.randint(0,board_size-1), random.randint(0,board_size-1)]
-        self.color = (243, 166, 98) if random.randint(0,10) == 0 else (175, 243, 98) # yellow or orange (10% chance)
+        self.color = ORANGE if random.randint(0,10) == 0 else RED # red or orange (10% chance)

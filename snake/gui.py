@@ -1,6 +1,3 @@
-# TODO: enter handling in settings and info
-# TODO: focus
-
 import PySimpleGUI as sg
 import os
 from .language import *
@@ -43,11 +40,17 @@ def info(lang):
               [sg.Button(lang['back'], key="-MENU-")]]
 
     window = sg.Window(lang['info_window'], layout, finalize=True, size=(480,350), return_keyboard_events=True, icon=icon)
+
     while(True):
         event, _ = window.read()
         if event == sg.WIN_CLOSED:
             break
-        elif event in ("-MENU-", '\r'):
+        if event in ('\r', 'special 16777220', 'special 16777221'):
+            elem = window.find_element_with_focus()
+            if elem is not None and elem.Type == sg.ELEM_TYPE_BUTTON:
+                elem.Click()
+
+        if event in ("-MENU-"):
             window.Close()
             break
 
@@ -79,11 +82,18 @@ def settings(personalize):
               [sg.Button(lang['save'], key="-MENU-")]]
 
     window = sg.Window(lang['settings_window'], layout, finalize=True, size=(480,280), return_keyboard_events=True, icon=icon)
+
     while(True):
         event, values = window.read()
         if event == sg.WIN_CLOSED:
             return(personalize)
-        if event in ("-MENU-", '\r'):
+
+        if event in ('\r', 'special 16777220', 'special 16777221'):
+            elem = window.find_element_with_focus()
+            if elem is not None and elem.Type == sg.ELEM_TYPE_BUTTON:
+                elem.Click()
+
+        if event == "-MENU-":
             window.Close()
             values['speed'] = lang['speeds'].index(values['speed'])+1
             return(values)
