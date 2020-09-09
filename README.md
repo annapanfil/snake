@@ -12,11 +12,13 @@ pySimpleGUI
 
 ## Setup
 
-`./snake`
+You need to have [python] and pip installed
+
+LINUX:
+
+run `snake.sh`
 
 (If access denied, try `chmod u+x snake`)
-
-(You need to have [python] and pip installed)
 
 ---
 Inspired by: [freeCodeCamp.org], [kiteco], [techwithTim]
