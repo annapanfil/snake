@@ -1,9 +1,12 @@
+# TODO: enter handling in settings and info
+# TODO: focus
+# TODO: snake head color
+
 import PySimpleGUI as sg
 import os
-from main import *
-from language import *
+from .language import *
 
-icon = "snake.png"
+icon = "snake/snake.png"
 
 def eventHandling(window):
     QT_ENTER_KEY1 = 'special 16777220'
@@ -76,8 +79,7 @@ def settings(personalize):
               [sg.Checkbox(lang['show_score'], default=personalize['show_score'], key="show_score")],
               [sg.Button(lang['save'], key="-MENU-")]]
 
-    window = sg.Window('Snake game - SETTINGS', layout, finalize=True, size=(480,280), return_keyboard_events=True, icon=icon)
-
+    window = sg.Window(lang['settings_window'], layout, finalize=True, size=(480,280), return_keyboard_events=True, icon=icon)
     while(True):
         event, values = window.read()
         if event == sg.WIN_CLOSED:
@@ -98,27 +100,6 @@ def mainMenu(lang):
 
     return eventHandling(window)
 
-def main():
-    # default settings
-    if 'personalize' not in locals(): personalize = {'lang': 'pl', 'board_size': 480, 'food': 1, 'speed': 1, 'speed_increase': True, 'show_score': True, 'wall_die': True}
-    lang = languages[personalize['lang']]
-
-    choice = mainMenu(lang)
-
-    while choice != 'exit':
-        if choice == 'play':
-            score = game(personalize)
-            choice = exitMenu(score, personalize)
-
-        elif choice == 'settings' :
-            personalize = settings(personalize)
-            lang = languages[personalize['lang']]
-            choice = mainMenu(lang)
-
-        elif choice == 'info':
-            info(lang)
-            choice = mainMenu(lang)
-            
 
 if __name__ == '__main__':
     main()

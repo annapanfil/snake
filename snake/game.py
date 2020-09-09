@@ -1,7 +1,6 @@
 import pygame as pg
-from classes import *
-from gui import *
-from language import *
+from .classes import *
+from .language import *
 
 def display(board, snake, food):
     board.display()
@@ -26,7 +25,7 @@ def game(personalize):
 
     # Title and icon
     pg.display.set_caption("Snake")
-    icon = pg.image.load("snake.png")
+    icon = pg.image.load("snake/snake.png")
     pg.display.set_icon(icon)
 
     clock = pg.time.Clock()
