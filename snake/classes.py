@@ -6,6 +6,9 @@ RIGHT = (1,0)
 UP = (0,-1)
 DOWN = (0,1)
 
+RED = (243, 98, 102)
+ORANGE = (243, 166, 98)
+
 class GameOver(Exception):
     def __init__(self, *args, **kwargs):
         super(GameOver, self).__init__(*args, **kwargs)
@@ -41,11 +44,13 @@ class Board():
 
 class Snake():
 
-    def __init__(self, start_position, color = (243, 98, 102)):
+    def __init__(self, start_position, wall_die, speed, color =  (175, 243, 98)):
         self.length = 1
         self.positions = [[start_position, start_position]] # position (in fields)
         self.color = color
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
+        self.wall_die = wall_die # if True – die from wall, if False – teleport
+        self.speed = speed
 
     def turn(self, turn_direcions):
         # check if eating its tail
@@ -68,12 +73,12 @@ class Snake():
             self.turn(UP)
         elif event.key in DOWN_KEYS:
             self.turn(DOWN)
-        elif event.key == ord('p'):
+        elif event.key in {ord('p'), ord(' ')}:
             raise GamePause
         # else:
             # print("Niepoprawny klawisz:", event.key)
 
-    def move(self, event, board_size, food):
+    def move(self, event, board_size, food, speed_increase):
         # move == change head position, delete end of tail
 
         head = self.positions[0]
@@ -84,33 +89,45 @@ class Snake():
             raise GameOver
 
         # check if hiting the border
-        elif new_head[0] < 0 or new_head[0] > board_size-1 or new_head[1] < 0 or new_head[1] > board_size-1:
-            raise GameOver
+        elif not(0 <= new_head[0] < board_size and  0 <= new_head[1] < board_size):
+            if self.wall_die:
+                raise GameOver
+            else:
+                if new_head[0] < 0: new_head[0] = board_size
+                elif new_head[0] == board_size: new_head[0] = 0
+                elif new_head[1] < 0: new_head[1] = board_size
+                elif new_head[1] == board_size: new_head[1] = 0
 
-        else:
-            self.positions.insert(0, new_head)
-            # check if eating food
-            for f in food:
-                if new_head == f.position:
-                    self.length += 1
-                    f.eat(board_size)
-        if self.length != len(self.positions):
+        self.positions.insert(0, new_head)
+        # check if eating food
+        for f in food:
+            if new_head == f.position:
+                if speed_increase: self.speed += 0.3
+                f.eat(self, board_size)
+
+        if self.length < len(self.positions):
             self.positions.pop()
 
-
     def display(self, board: Board):
+        head = True
         for coords in self.positions:
             rectangle = pg.Rect((coords[0]*board.field_size, coords[1]*board.field_size), (board.field_size, board.field_size))
-            pg.draw.rect(board.surface, self.color, rectangle)
+            if head:
+                pg.draw.rect(board.surface, (218, 247, 166), rectangle)
+                head = False
+            else: pg.draw.rect(board.surface, self.color, rectangle)
 
 class Food():
-    def __init__(self, board_size, color = (175, 243, 98)):
+    def __init__(self, board_size):
         self.position = [random.randint(0,board_size-1), random.randint(0,board_size-1)]
-        self.color = color
+        self.color = ORANGE if random.randint(0,10) == 0 else RED # red or orange (10% chance)
 
     def display(self, board):
         rectangle = pg.Rect((self.position[0]*board.field_size, self.position[1]*board.field_size), (board.field_size, board.field_size))
         pg.draw.rect(board.surface, self.color, rectangle)
 
-    def eat(self, board_size):
+    def eat(self, snake, board_size):
+        snake.length += 1 if self.color == RED else 2 # red or orange
+        # produce "new" food – new position and color
         self.position = [random.randint(0,board_size-1), random.randint(0,board_size-1)]
+        self.color = ORANGE if random.randint(0,10) == 0 else RED # red or orange (10% chance)
