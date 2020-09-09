@@ -1,6 +1,16 @@
 # Snake
-Snake game in python.
+Classic Snake game :green_heart:
 
+---
+Eat food to increase length (and the score).
+
+Do not eat your tail. 
+
+Do not hit the walls (or teleport after touching them). 
+
+Adjust board size, speed, quantitity of food and many others!
+
+---
 Written just for fun (and to get familiar with Pygame, PySimpleGUI and git).
 
 ## Technologies
@@ -14,11 +24,11 @@ pySimpleGUI
 
 You need to have [python] and pip installed
 
-LINUX:
+pip3 install -r requirements.txt
 
-run `snake.sh`
+**python3 -m snake**
 
-(If access denied, try `chmod u+x snake`)
+On Linux you can just run `snake.sh` (If access denied, try `chmod u+x snake.sh`)
 
 ---
 Inspired by: [freeCodeCamp.org], [kiteco], [techwithTim]
