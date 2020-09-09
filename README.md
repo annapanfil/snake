@@ -24,9 +24,9 @@ pySimpleGUI
 
 You need to have [python] and pip installed
 
-pip3 install -r requirements.txt
+$pip3 install -r requirements.txt
 
-**python3 -m snake**
+**$python3 -m snake**
 
 On Linux you can just run `snake.sh` (If access denied, try `chmod u+x snake.sh`)
 
