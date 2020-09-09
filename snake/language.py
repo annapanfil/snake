@@ -36,7 +36,7 @@ languages = {
     #EXIT
     'exit_window': "Snake – GAME OVER",
     'game_over': "\nGAME OVER",
-    'your_score': 'Your score: {}\n',
+    'your_score': 'Your score: {}',
     'play_again': "Play again"
     },
 
@@ -77,7 +77,7 @@ languages = {
     #KONIEC GRY
     'exit_window': "Snake – KONIEC GRY",
     'game_over': "\nKONIEC GRY",
-    'your_score': 'Twój wynik: {}\n',
+    'your_score': 'Twój wynik: {}',
     'play_again': "Zagraj ponownie"
     }
 }
