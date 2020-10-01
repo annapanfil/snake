@@ -1,5 +1,5 @@
-# Snake
-Classic Snake game :green_heart:
+# Snake - An Amazaing intermidiate Project
+Classic Snake game :green_heart::blue_heart:
 
 ---
 Eat food to increase length (and the score).
